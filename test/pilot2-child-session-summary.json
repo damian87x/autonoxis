@@ -1,0 +1,7 @@
+[
+  {"type":"model_change"},
+  {"type":"thinking_level_change"},
+  {"type":"session_info"},
+  {"type":"message","message":{"role":"user"}},
+  {"type":"message","message":{"role":"assistant","provider":"openai-codex","model":"gpt-5.6-sol"}}
+]
