@@ -11,14 +11,14 @@ Prerequisites: Pi **0.85.1**, `pi-subagents` **0.68.0** installed at user scope,
 pi install npm:pi-subagents@0.68.0
 
 # Preview the extension for one session, without permanently installing it:
-pi -e git:github.com/damian87x/autonoxis@v0.1.0
+pi -e git:github.com/damian87x/autonoxis@v0.1.1
 # In the interactive Pi session: /autonoxis status
 
 # Once satisfied, install persistently at user scope and restart Pi:
-pi install git:github.com/damian87x/autonoxis@v0.1.0
+pi install git:github.com/damian87x/autonoxis@v0.1.1
 ```
 
-The one-session preview still runs package code, but `/autonoxis status` does **not** launch a subagent or call Ollama. Review the source before installing. `pi install` changes your user-level Pi settings; the commands above are instructions for you, not actions performed by this repository. To remove the persistent install: `pi remove git:github.com/damian87x/autonoxis@v0.1.0`.
+The one-session preview still runs package code, but `/autonoxis status` does **not** launch a subagent or call Ollama. Review the source before installing. `pi install` changes your user-level Pi settings; the commands above are instructions for you, not actions performed by this repository. To remove the persistent install: `pi remove git:github.com/damian87x/autonoxis@v0.1.1`.
 
 This package is intentionally pinned to the above Pi and pi-subagents versions and the exact `openai-codex/gpt-5.6-sol:off` child identity. Other versions or models fail closed. It neither installs nor configures Pi, pi-subagents, Sol, or Ollama for you. It does not provide autonomous planning: a `run` needs a fresh, human-approved, finite v2 JSON contract under the intended working directory, that file's SHA-256, an unexpired authority, and a package-agent digest resolved for that root. A contract hash can be used once. **Do not try `/autonoxis run` until you have deliberately prepared such a contract and accepted premium inference.** `/autonoxis stop` revokes one run; it is not a general-purpose supervisor.
 

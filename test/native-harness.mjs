@@ -152,7 +152,7 @@ if (!["assert-api", "print-agent-identity", "assert-configured-agent", "assert-h
     if (!source || !path.isAbsolute(source) || !fs.existsSync(path.join(source, "package.json"))) throw new Error("agent_dir_invalid");
     if (!value || !path.isAbsolute(value) || !fs.existsSync(value) || !fs.lstatSync(value).isDirectory() || fs.lstatSync(value).isSymbolicLink()) throw new Error("run_root_not_disposable");
     const resolvedRoot = fs.realpathSync(value), tempRoot = fs.realpathSync(os.tmpdir()), relative = path.relative(tempRoot, resolvedRoot);
-    if (!relative || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) throw new Error("run_root_not_disposable");
+    if (!relative || relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) throw new Error("run_root_not_disposable");
     const piDir = path.join(resolvedRoot, ".pi"), marker = path.join(piDir, "autonoxis-harness-root.json"), sourcePath = fs.realpathSync(source), markerBytes = `${JSON.stringify({ version: 1, root: resolvedRoot, source: sourcePath })}\n`;
     if (!fs.existsSync(piDir)) {
       if (fs.readdirSync(resolvedRoot).length !== 0) throw new Error("run_root_not_empty");
