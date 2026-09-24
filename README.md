@@ -1,6 +1,6 @@
 # Autonoxis for Pi
 
-An experimental [Pi](https://github.com/badlogic/pi-mono) extension that uses the local `autonoxis-conductor:14b` classifier to gate a **single, human-authored** sequence of tools-free Sol subagent tasks. It adds `/autonoxis run <contract-path> <sha256>`, `/autonoxis status [run-id]`, and `/autonoxis stop [run-id]`. This is **not** the `jev-claude-orchestrator` Claude Code plugin.
+An experimental [Pi](https://github.com/badlogic/pi-mono) extension that uses the local `autonoxis-conductor:14b` classifier to gate a **single, human-authored** sequence of tools-free Sol subagent tasks. It adds `/autonoxis run <contract-path> <sha256>`, `/autonoxis status [run-id]`, and `/autonoxis stop [run-id]`. The common typo `/atonoxis` is an alias for the same command. This is **not** the `jev-claude-orchestrator` Claude Code plugin.
 
 ## Try the install
 
@@ -11,18 +11,18 @@ Prerequisites: Pi **0.85.1**, `pi-subagents` **0.68.0** installed at user scope,
 pi install npm:pi-subagents@0.68.0
 
 # Preview ONLY if this package is not already installed:
-pi -e git:github.com/damian87x/autonoxis@v0.1.2
-# In Pi: /autonoxis status → "No active Autonoxis run."
+pi -e git:github.com/damian87x/autonoxis@v0.1.3
+# In Pi: /autonoxis status (or /atonoxis status) → "No active Autonoxis run."
 
 # To install persistently at user scope:
-pi install git:github.com/damian87x/autonoxis@v0.1.2
+pi install git:github.com/damian87x/autonoxis@v0.1.3
 # Thereafter start Pi normally: pi
 # In Pi: /autonoxis status → "No active Autonoxis run."
 ```
 
 **Choose one loading method per session.** If `pi list` already shows `git:github.com/damian87x/autonoxis`, use `pi`, **not** `pi -e git:github.com/damian87x/autonoxis`: loading it twice makes Pi rename the commands `/autonoxis:1` and `/autonoxis:2`. Bare `/autonoxis status` then falls through to the LLM instead of the extension, potentially incurring cost. Exit that Pi session and restart with `pi` alone. The status response means the extension loaded and is idle; it does **not** demonstrate delegation. Do not try bare `/autonoxis run` as a smoke test—it requires a contract path and hash.
 
-The one-session preview still runs package code. Review the source before installing. `pi install` changes your user-level Pi settings; the commands above are instructions for you, not actions performed by this repository. To remove the persistent install: `pi remove git:github.com/damian87x/autonoxis@v0.1.2`.
+The one-session preview still runs package code. Review the source before installing. `pi install` changes your user-level Pi settings; the commands above are instructions for you, not actions performed by this repository. To remove the persistent install: `pi remove git:github.com/damian87x/autonoxis@v0.1.3`.
 
 This package is intentionally pinned to the above Pi and pi-subagents versions and the exact `openai-codex/gpt-5.6-sol:off` child identity. Other versions or models fail closed. It neither installs nor configures Pi, pi-subagents, Sol, or Ollama for you. It does not provide autonomous planning: a `run` needs a fresh, human-approved, finite v2 JSON contract under the intended working directory, that file's SHA-256, an unexpired authority, and a package-agent digest resolved for that root. A contract hash can be used once. **Do not try `/autonoxis run` until you have deliberately prepared such a contract and accepted premium inference.** `/autonoxis stop` revokes one run; it is not a general-purpose supervisor.
 

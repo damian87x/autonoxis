@@ -232,7 +232,7 @@ export default function autonoxis(pi: any) {
     }
   }
 
-  pi.registerCommand("autonoxis", {
+  const command = {
     description: "Human-authorized tools-free run/status/stop.",
     handler: async (args: string, ctx: any) => {
       try {
@@ -259,7 +259,9 @@ export default function autonoxis(pi: any) {
         throw new Error("usage: /autonoxis run <contract-path> <sha256> | status [run-id] | stop [run-id]");
       } catch (error) { notify(ctx, error instanceof Error ? error.message : String(error), "error"); }
     },
-  });
+  };
+  pi.registerCommand("autonoxis", command);
+  pi.registerCommand("atonoxis", command);
   pi.on("session_start", (_event: any, ctx: any) => {
     const autonoxisEntries = ctx.sessionManager.getEntries().filter((entry: any) => entry.type === "custom" && typeof entry.customType === "string" && entry.customType.startsWith("autonoxis-"));
     const states = autonoxisEntries.filter((entry: any) => entry.customType === "autonoxis-state");

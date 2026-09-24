@@ -11,6 +11,19 @@ import { resolvePinnedPiEntry } from "./pi-entry.mjs";
 
 const sha256 = value => createHash("sha256").update(value).digest("hex");
 
+test("misspelled status command reaches the plugin without inference", async () => {
+  const agentDir = process.env.PI_CODING_AGENT_DIR || path.join(os.homedir(), ".pi", "agent");
+  const anchor = path.join(agentDir, "npm", "package.json"), { entry: piEntry } = resolvePinnedPiEntry();
+  const jiti = createRequire(anchor)("jiti")(anchor, { interopDefault: true, alias: { "@earendil-works/pi-coding-agent": piEntry } });
+  const plugin = (await jiti.import(path.resolve("index.ts"))).default;
+  const commands = {}, notices = [];
+  plugin({ registerCommand: (name, command) => { commands[name] = command; }, on: () => {}, events: { on: () => () => {}, emit: () => {} }, appendEntry: () => { throw new Error("unexpected_entry"); } });
+  assert.deepEqual(Object.keys(commands).sort(), ["atonoxis", "autonoxis"]);
+  assert.equal(commands.atonoxis.handler, commands.autonoxis.handler);
+  await commands.atonoxis.handler("status", { ui: { notify: (message, level) => notices.push({ message, level }) } });
+  assert.deepEqual(notices, [{ message: "No active Autonoxis run.", level: "info" }]);
+});
+
 test("actual plugin terminal preserves the correlated identity through accounting artifacts", { timeout: 20_000 }, async () => {
   const pluginRoot = path.resolve(".");
   const runRoot = mkdtempSync(path.join(os.tmpdir(), "autonoxis-producer-"));
